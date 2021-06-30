@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
-import { Container, Grid } from "@material-ui/core";
+import { Container, CircularProgress } from "@material-ui/core";
 import "./App.css";
 import Congrats from "./Congrats";
 import GuessedWords from "./GuessedWords";
 import Input from "./Input";
 import { getSecretWord } from "./actions";
 
-interface State {
-  secretWord: string;
+export interface State {
+  secretWord: string | null;
 }
 
-type Action = {
+export type Action = {
   type: string;
-  payload: string;
+  payload: string | null;
 };
 
 const reducer = (state: State, action: Action): State => {
@@ -25,7 +25,7 @@ const reducer = (state: State, action: Action): State => {
 };
 
 function App() {
-  const [state, dispatch] = React.useReducer(reducer, { secretWord: "" });
+  const [state, dispatch] = React.useReducer(reducer, { secretWord: null });
 
   const success = false;
   const guessedWords: [] = [];
@@ -37,6 +37,15 @@ function App() {
   useEffect(() => {
     getSecretWord(setSecretWord);
   }, []);
+
+  if (state.secretWord === null) {
+    return (
+      <Container data-test="spinner">
+        <CircularProgress />
+        <p>Loading secret word...</p>
+      </Container>
+    );
+  }
 
   return (
     <Container data-test="component-app">
