@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Grid } from "@material-ui/core";
 import "./App.css";
 import Congrats from "./Congrats";
@@ -7,13 +7,13 @@ import Input from "./Input";
 import { getSecretWord } from "./actions";
 
 function App() {
+  const [secretWord, setSecretWord] = useState<string>("");
   const success = false;
-  const secretWord = "titans";
   const guessedWords: [] = [];
 
   useEffect(() => {
-    getSecretWord();
-  },[])
+    getSecretWord(setSecretWord);
+  }, []);
 
   return (
     <Container data-test="component-app">

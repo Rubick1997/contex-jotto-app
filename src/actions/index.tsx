@@ -1,8 +1,9 @@
 import axios from "axios";
 
-export const getSecretWord =() => {
-  //return response from server
-  //write actuall action in Redux/contet sections
-  return axios.get("http://localhost:3030")
-  .then(response => response.data);
+export const getSecretWord = async (
+  setSecretWord: React.Dispatch<React.SetStateAction<string>>
+) => {
+  const response = await axios
+    .get("http://localhost:3030")
+  setSecretWord(response.data);
 };
