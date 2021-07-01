@@ -1,6 +1,6 @@
 import { ShallowWrapper, ReactWrapper } from "enzyme";
 
-export interface CongratsType {
+export interface LanguageContextType {
   success?: boolean;
   language?: string;
 }
@@ -10,8 +10,9 @@ export interface GuessedWordsType {
 }
 
 export interface InputType {
-  success: boolean;
-  secretWord: string | null;
+  language?: string;
+  secretWord?: string;
+  success?: boolean;
 }
 
 export type Wrapper = ShallowWrapper | ReactWrapper;

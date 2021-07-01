@@ -1,10 +1,10 @@
 import { mount } from "enzyme";
 import { findByTestAttr } from "../test/testUtils";
 import Congrats from "./Congrats";
-import { CongratsType } from "./types";
+import { LanguageContextType } from "./types";
 import languageContext from "./contexts/languageContext";
 
-const setup = ({ language, success }: CongratsType) => {
+const setup = ({ language, success }: LanguageContextType) => {
   language = language || "en";
   success = success || false;
   return mount(

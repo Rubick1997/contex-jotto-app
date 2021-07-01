@@ -1,14 +1,14 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { TextField, Button } from "@material-ui/core";
 import { InputType } from "./types";
+import languageContext from "./contexts/languageContext";
+import { getStringByLanguage } from "./helpers/strings";
 
-function Input({
-  success,
-  secretWord,
-}: InputType) {
+const Input: FunctionComponent<InputType> = (props) => {
+  const language = React.useContext(languageContext);
   const [currentGuess, setCurrentGuess] = React.useState("");
 
-  if (success) {
+  if (props.success) {
     return <div data-test="component-input" />;
   }
 
@@ -17,12 +17,14 @@ function Input({
       <form action="">
         <TextField
           label="type a word"
-          data-test="input-box"
+          inputProps={{
+            "data-test": "input-box",
+          }}
+          placeholder={getStringByLanguage(language, "guessInputPlaceholder")}
           value={currentGuess}
           onChange={(event) => setCurrentGuess(event.target.value)}
         />
         <Button
-          data-test="submit-button"
           variant="contained"
           color="primary"
           onClick={(event) => {
@@ -30,11 +32,13 @@ function Input({
             setCurrentGuess("");
           }}
         >
-          Search
+          <div data-test="submit-button">
+            {getStringByLanguage(language, "submit")}
+          </div>
         </Button>
       </form>
     </div>
   );
-}
+};
 
 export default Input;
