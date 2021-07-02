@@ -3,13 +3,16 @@ import { findByTestAttr } from "../test/testUtils";
 import Congrats from "./Congrats";
 import { LanguageContextType } from "./types";
 import languageContext from "./contexts/languageContext";
+import { SuccessProvider } from "./contexts/successContext";
 
 const setup = ({ language, success }: LanguageContextType) => {
   language = language || "en";
   success = success || false;
   return mount(
     <languageContext.Provider value={language}>
-      <Congrats success={success} />
+      <SuccessProvider value={[success, jest.fn()]}>
+        <Congrats />
+      </SuccessProvider>
     </languageContext.Provider>
   );
 };
@@ -31,13 +34,13 @@ test("renders without error", () => {
   expect(component.length).toBe(1);
 });
 
-test("renders no text when 'success' props is false", () => {
+test("renders no text when 'success' is false", () => {
   const wrapper = setup({ success: false });
   const component = findByTestAttr(wrapper, "component-congrats");
   expect(component.text()).toBe("");
 });
 
-test("renders non-empty congrats when 'success' props is true", () => {
+test("renders non-empty congrats when 'success' is true", () => {
   const wrapper = setup({ success: true });
   const message = findByTestAttr(wrapper, "congrats-message");
   expect(message.text().length).not.toBe(0);

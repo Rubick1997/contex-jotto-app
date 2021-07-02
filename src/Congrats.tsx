@@ -4,11 +4,13 @@ import { Chip } from "@material-ui/core";
 import { FunctionComponent } from "react";
 import languageContext from "./contexts/languageContext";
 import { getStringByLanguage } from "./helpers/strings";
+import { useSuccess } from "./contexts/successContext";
 
-const Congrats: FunctionComponent<LanguageContextType> = (props) => {
+const Congrats: FunctionComponent<LanguageContextType> = () => {
+  const [success] = useSuccess();
   const language = React.useContext(languageContext);
 
-  if (props.success) {
+  if (success) {
     return (
       <div data-test="component-congrats">
         <span data-test="congrats-message">

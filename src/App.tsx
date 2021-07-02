@@ -6,6 +6,7 @@ import GuessedWords from "./GuessedWords";
 import Input from "./Input";
 import { getSecretWord } from "./actions";
 import languageContext from "./contexts/languageContext";
+import { SuccessProvider } from "./contexts/successContext";
 import LanguagePicker from "./LanguagePicker";
 
 export interface State {
@@ -34,8 +35,6 @@ function App() {
     secretWord: "",
     language: "en",
   });
-
-  const success = false;
   const guessedWords: [] = [];
 
   const setSecretWord: React.Dispatch<any> = (secretWord: string) => {
@@ -64,8 +63,10 @@ function App() {
       <h1>Jotto</h1>
       <languageContext.Provider value={state.language}>
         <LanguagePicker setLanguage={setLanguage} />
-        <Congrats success={success} />
-        <Input success={success} secretWord={state.secretWord} />
+        <SuccessProvider>
+          <Congrats />
+          <Input secretWord={state.secretWord} />
+        </SuccessProvider>
         <GuessedWords guessedWords={guessedWords} />
       </languageContext.Provider>
     </Container>
