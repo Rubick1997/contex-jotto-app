@@ -8,6 +8,7 @@ import { getSecretWord } from "./actions";
 import languageContext from "./contexts/languageContext";
 import { SuccessProvider } from "./contexts/successContext";
 import LanguagePicker from "./LanguagePicker";
+import guessedWordsContext from "./contexts/guessedWordsContext";
 
 export interface State {
   secretWord: string;
@@ -63,11 +64,13 @@ function App() {
       <h1>Jotto</h1>
       <languageContext.Provider value={state.language}>
         <LanguagePicker setLanguage={setLanguage} />
-        <SuccessProvider>
-          <Congrats />
-          <Input secretWord={state.secretWord} />
-        </SuccessProvider>
-        <GuessedWords guessedWords={guessedWords} />
+        <guessedWordsContext.GuessedWordsProvider>
+          <SuccessProvider>
+            <Congrats />
+            <Input secretWord={state.secretWord} />
+          </SuccessProvider>
+          <GuessedWords />
+        </guessedWordsContext.GuessedWordsProvider>
       </languageContext.Provider>
     </Container>
   );

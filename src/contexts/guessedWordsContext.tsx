@@ -1,8 +1,8 @@
 import React, { FunctionComponent, Dispatch, SetStateAction } from "react";
 
 const guessedWordsContext = React.createContext<
-  (never[] | Dispatch<SetStateAction<never[]>>)[] | null
->(null);
+  (never[] | Dispatch<SetStateAction<never[]>>)[] | undefined
+>(undefined);
 
 const useGuessedWords = () => {
   const context = React.useContext(guessedWordsContext);
@@ -25,5 +25,5 @@ const GuessedWordsProvider: FunctionComponent = (
   );
   return <guessedWordsContext.Provider value={value} {...props} />;
 };
-
-export { GuessedWordsProvider, useGuessedWords };
+const instruments = { GuessedWordsProvider, useGuessedWords };
+export default instruments;

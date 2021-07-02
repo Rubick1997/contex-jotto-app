@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import languageContext from "./contexts/languageContext";
 import { getStringByLanguage } from "./helpers/strings";
+import guessedWordsContext from "./contexts/guessedWordsContext";
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -24,10 +25,11 @@ const StyledTableCell = withStyles((theme: Theme) =>
   })
 )(TableCell);
 
-const GuessedWords: FunctionComponent<GuessedWordsType> = (props) => {
+const GuessedWords = () => {
+  const [guessedWords] = guessedWordsContext.useGuessedWords();
   const language = React.useContext(languageContext);
 
-  const guessedWordsRows = props.guessedWords.map((word, index) => (
+  const guessedWordsRows = guessedWords.map((word, index) => (
     <TableRow key={index} data-test="guessed-word">
       <TableCell>{word.guessedWord}</TableCell>
       <TableCell>{word.letterMatchCount}</TableCell>
@@ -35,7 +37,7 @@ const GuessedWords: FunctionComponent<GuessedWordsType> = (props) => {
   ));
 
   const contents =
-    props.guessedWords.length === 0 ? (
+    guessedWords.length === 0 ? (
       <span data-test="guess-instructions">
         {getStringByLanguage(language, "guessPrompt")}
       </span>
