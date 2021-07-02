@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { GuessedWordsType } from "./types";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import {
@@ -9,6 +9,8 @@ import {
   TableRow,
   TableCell,
 } from "@material-ui/core";
+import languageContext from "./contexts/languageContext";
+import { getStringByLanguage } from "./helpers/strings";
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -22,7 +24,9 @@ const StyledTableCell = withStyles((theme: Theme) =>
   })
 )(TableCell);
 
-function GuessedWords(props: GuessedWordsType) {
+const GuessedWords: FunctionComponent<GuessedWordsType> = (props) => {
+  const language = React.useContext(languageContext);
+
   const guessedWordsRows = props.guessedWords.map((word, index) => (
     <TableRow key={index} data-test="guessed-word">
       <TableCell>{word.guessedWord}</TableCell>
@@ -32,15 +36,21 @@ function GuessedWords(props: GuessedWordsType) {
 
   const contents =
     props.guessedWords.length === 0 ? (
-      <span data-test="guess-instructions">Try to guess the secret word!</span>
+      <span data-test="guess-instructions">
+        {getStringByLanguage(language, "guessPrompt")}
+      </span>
     ) : (
       <TableContainer component={Paper} data-test="guessed-words">
-        <h3>Guessed words</h3>
+        <h3>{getStringByLanguage(language, "guessColumnHeader")}</h3>
         <Table>
           <TableHead>
             <TableRow>
-              <StyledTableCell>Guess</StyledTableCell>
-              <StyledTableCell>Matching Letters</StyledTableCell>
+              <StyledTableCell>
+                {getStringByLanguage(language, "guessedWords")}
+              </StyledTableCell>
+              <StyledTableCell>
+                {getStringByLanguage(language, "matchingLettersColumnHeader")}
+              </StyledTableCell>
             </TableRow>
           </TableHead>
           <tbody>{guessedWordsRows}</tbody>
@@ -49,6 +59,6 @@ function GuessedWords(props: GuessedWordsType) {
     );
 
   return <div data-test="component-guessed-words">{contents}</div>;
-}
+};
 
 export default GuessedWords;
