@@ -25,11 +25,12 @@ const StyledTableCell = withStyles((theme: Theme) =>
   })
 )(TableCell);
 
-const GuessedWords = () => {
+const GuessedWords: FunctionComponent = () => {
   const [guessedWords] = guessedWordsContext.useGuessedWords();
   const language = React.useContext(languageContext);
+  const guessedWordsArr = guessedWords as GuessedWordsType[];
 
-  const guessedWordsRows = guessedWords.map((word, index) => (
+  const guessedWordsRows: JSX.Element[] = guessedWordsArr.map((word, index) => (
     <TableRow key={index} data-test="guessed-word">
       <TableCell>{word.guessedWord}</TableCell>
       <TableCell>{word.letterMatchCount}</TableCell>

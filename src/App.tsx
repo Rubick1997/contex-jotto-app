@@ -36,7 +36,6 @@ function App() {
     secretWord: "",
     language: "en",
   });
-  const guessedWords: [] = [];
 
   const setSecretWord: React.Dispatch<any> = (secretWord: string) => {
     dispatch({ type: "setSecretWord", payload: secretWord });

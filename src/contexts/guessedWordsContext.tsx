@@ -1,7 +1,12 @@
-import React, { FunctionComponent, Dispatch, SetStateAction } from "react";
+import React, { FunctionComponent } from "react";
+import { GuessedWordsType } from "../types";
 
 const guessedWordsContext = React.createContext<
-  (never[] | Dispatch<SetStateAction<never[]>>)[] | undefined
+  | (
+      | GuessedWordsType[]
+      | React.Dispatch<React.SetStateAction<GuessedWordsType[]>>
+    )[]
+  | undefined
 >(undefined);
 
 const useGuessedWords = () => {
@@ -14,16 +19,20 @@ const useGuessedWords = () => {
   return context;
 };
 
-const GuessedWordsProvider: FunctionComponent = (
-  props: Object
-): JSX.Element => {
-  const [guessedWords, setGuessedWords] = React.useState([]);
+const GuessedWordsProvider: FunctionComponent = (props): JSX.Element => {
+  const [guessedWords, setGuessedWords] = React.useState<GuessedWordsType[]>(
+    []
+  );
 
   const value = React.useMemo(
     () => [guessedWords, setGuessedWords],
     [guessedWords]
   );
-  return <guessedWordsContext.Provider value={value} {...props} />;
+  return (
+    <guessedWordsContext.Provider value={value} {...props}>
+      {props.children}
+    </guessedWordsContext.Provider>
+  );
 };
 const instruments = { GuessedWordsProvider, useGuessedWords };
 export default instruments;

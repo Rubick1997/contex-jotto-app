@@ -3,12 +3,14 @@ import { TextField, Button } from "@material-ui/core";
 import { InputType } from "./types";
 import languageContext from "./contexts/languageContext";
 import { getStringByLanguage } from "./helpers/strings";
+import { useSuccess } from "./contexts/successContext";
 
-const Input: FunctionComponent<InputType> = (props) => {
+const Input: FunctionComponent<InputType> = () => {
   const language = React.useContext(languageContext);
+  const [success, setSuccess] = useSuccess();
   const [currentGuess, setCurrentGuess] = React.useState("");
 
-  if (props.success) {
+  if (success) {
     return <div data-test="component-input" />;
   }
 

@@ -6,7 +6,8 @@ export interface LanguageContextType {
 }
 
 export interface GuessedWordsType {
-  guessedWords: { guessedWord: string; letterMatchCount: number }[];
+  guessedWord: string;
+  letterMatchCount: number;
 }
 
 export interface InputType {

@@ -4,8 +4,9 @@ import { findByTestAttr } from "../test/testUtils";
 import GuessedWords from "./GuessedWords";
 import { Wrapper } from "./types";
 import guessedWordsContext from "./contexts/guessedWordsContext";
+import { GuessedWordsType } from "./types";
 
-const setup = (guessedWords = []) => {
+const setup = (guessedWords:GuessedWordsType[]) => {
   const mockUseGuessedWords = jest
     .fn()
     .mockReturnValue([guessedWords, jest.fn()]);

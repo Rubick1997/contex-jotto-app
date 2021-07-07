@@ -4,9 +4,32 @@ import { mount, ReactWrapper } from "enzyme";
 import App from "./App";
 import { findByTestAttr } from "../test/testUtils";
 
-const setup = (state = {}) => {
+import { SuccessProvider } from "./contexts/successContext";
+import guessedWordsContexts from "./contexts/guessedWordsContext";
+
+import Congrats from "./Congrats";
+import Input from "./Input";
+import GuessedWords from "./GuessedWords";
+import { GuessedWordsType } from "./types";
+
+const setup = ({
+  secretWord,
+  guessedWords,
+  success,
+}: {
+  secretWord?: string;
+  guessedWords?: GuessedWordsType[] | [];
+  success?: boolean;
+}) => {
   //apply state
-  const wrapper = mount(<App />);
+  const wrapper = mount(
+    <guessedWordsContexts.GuessedWordsProvider>
+      <SuccessProvider>
+        <Congrats />
+        <Input secretWord={secretWord} />
+      </SuccessProvider>
+    </guessedWordsContexts.GuessedWordsProvider>
+  );
 
   //add value to input box
   const inputBox = findByTestAttr(wrapper, "input-box");
@@ -16,12 +39,19 @@ const setup = (state = {}) => {
   const submitButton = findByTestAttr(wrapper, "submit-button");
   submitButton.simulate("click", { preventDefault() {} });
 
+  guessedWords &&
+    guessedWords.map((guess) => {
+      const mockEvent = { target: { value: guess.guessedWord } };
+      inputBox.simulate("change", mockEvent);
+      submitButton.simulate("click", { preventDefault() {} });
+    });
+
   return wrapper;
 };
 
-describe('invalid word guessed',() => {
-  test.todo("guessedWords table does not get another row")
-} )
+describe("invalid word guessed", () => {
+  test.todo("guessedWords table does not get another row");
+});
 
 describe.skip("no words guessed", () => {
   let wrapper: ReactWrapper;
@@ -83,11 +113,11 @@ describe.skip("guess secret word", () => {
     expect(congrats.text().length).toBeGreaterThan(0);
   });
 
-  test("does not display input component contents",() => {
-    const inputBox = findByTestAttr(wrapper,"input-box");
+  test("does not display input component contents", () => {
+    const inputBox = findByTestAttr(wrapper, "input-box");
     expect(inputBox.exists()).toBe(false);
 
     const submitButton = findByTestAttr(wrapper, "submit-button");
-    expect(submitButton.exists()).toBe(false)
-  } )
+    expect(submitButton.exists()).toBe(false);
+  });
 });
