@@ -5,6 +5,7 @@ import Input from "./Input";
 import { InputType, Wrapper } from "./types";
 import languageContext from "./contexts/languageContext";
 import { SuccessProvider } from "./contexts/successContext";
+import guessedWordsContext from "./contexts/guessedWordsContext";
 
 //if we want to use useState insea of React.useState
 // const mockSetCurrentGuess = jest.fn();
@@ -20,7 +21,9 @@ const setup = ({ language, secretWord, success }: InputType) => {
   return mount(
     <languageContext.Provider value={language}>
       <SuccessProvider value={[success, jest.fn()]}>
-        <Input secretWord={secretWord} />
+        <guessedWordsContext.GuessedWordsProvider>
+          <Input secretWord={secretWord} />
+        </guessedWordsContext.GuessedWordsProvider>
       </SuccessProvider>
     </languageContext.Provider>
   );

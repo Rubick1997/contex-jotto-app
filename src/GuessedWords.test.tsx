@@ -6,7 +6,7 @@ import { Wrapper } from "./types";
 import guessedWordsContext from "./contexts/guessedWordsContext";
 import { GuessedWordsType } from "./types";
 
-const setup = (guessedWords:GuessedWordsType[]) => {
+const setup = (guessedWords: GuessedWordsType[]) => {
   const mockUseGuessedWords = jest
     .fn()
     .mockReturnValue([guessedWords, jest.fn()]);

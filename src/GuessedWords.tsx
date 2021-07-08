@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from "react";
-import { GuessedWordsType } from "./types";
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import {
   TableContainer,
@@ -28,13 +27,12 @@ const StyledTableCell = withStyles((theme: Theme) =>
 const GuessedWords: FunctionComponent = () => {
   const [guessedWords] = guessedWordsContext.useGuessedWords();
   const language = React.useContext(languageContext);
-  const guessedWordsArr = guessedWords as GuessedWordsType[];
 
-  const guessedWordsRows: JSX.Element[] = guessedWordsArr.map((word, index) => (
-    <TableRow key={index} data-test="guessed-word">
+  const guessedWordsRows = guessedWords.map((word, index) => (
+    <tr key={index} data-test="guessed-word">
       <TableCell>{word.guessedWord}</TableCell>
       <TableCell>{word.letterMatchCount}</TableCell>
-    </TableRow>
+    </tr>
   ));
 
   const contents =

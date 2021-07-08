@@ -1,7 +1,10 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { ReactNode } from "react";
 
-type ContextType = (boolean | Dispatch<SetStateAction<boolean>>)[] | undefined;
+type ContextType = [
+  success: boolean,
+  setSuccess: Dispatch<SetStateAction<boolean>>
+];
 
 type Props = {
   children: ReactNode;
@@ -22,7 +25,10 @@ const useSuccess = () => {
 const SuccessProvider = (props: Props) => {
   const [success, setSuccess] = React.useState(false);
 
-  const value = React.useMemo(() => [success, setSuccess], [success]);
+  const value = React.useMemo<ContextType>(
+    () => [success, setSuccess],
+    [success]
+  );
 
   return (
     <successContext.Provider value={value} {...props}>

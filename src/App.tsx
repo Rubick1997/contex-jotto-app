@@ -61,6 +61,7 @@ function App() {
   return (
     <Container data-test="component-app">
       <h1>Jotto</h1>
+      The secret word is  {state.secretWord}
       <languageContext.Provider value={state.language}>
         <LanguagePicker setLanguage={setLanguage} />
         <guessedWordsContext.GuessedWordsProvider>

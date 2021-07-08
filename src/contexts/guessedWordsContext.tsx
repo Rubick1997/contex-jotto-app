@@ -1,13 +1,14 @@
 import React, { FunctionComponent } from "react";
 import { GuessedWordsType } from "../types";
 
-const guessedWordsContext = React.createContext<
-  | (
-      | GuessedWordsType[]
-      | React.Dispatch<React.SetStateAction<GuessedWordsType[]>>
-    )[]
-  | undefined
->(undefined);
+type ContextType = [
+  guessedWord: GuessedWordsType[],
+  setGuessedWords: React.Dispatch<React.SetStateAction<GuessedWordsType[]>>
+];
+
+const guessedWordsContext = React.createContext<ContextType | undefined>(
+  undefined
+);
 
 const useGuessedWords = () => {
   const context = React.useContext(guessedWordsContext);
@@ -24,7 +25,7 @@ const GuessedWordsProvider: FunctionComponent = (props): JSX.Element => {
     []
   );
 
-  const value = React.useMemo(
+  const value = React.useMemo<ContextType>(
     () => [guessedWords, setGuessedWords],
     [guessedWords]
   );
